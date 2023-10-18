@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GDXSC5Y2BD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GDXSC5Y2BD');
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<script src="./files/head.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<meta name="keywords" content="Stanford,Reinforcement Learning,RvS,Behaviour Cloning">
+
+<article class="post-content">
+  <meta name="twitter:title" content="Waypoint Transformer: Reinforcement Learning via Supervised Learning with Intermediate Targets"/>
+<article class="post-content">
+
+<title>Waypoint Transformer: Reinforcement Learning via Supervised Learning with Intermediate Targets</title>
+<link rel="stylesheet" href="./files/font.css">
+<link rel="stylesheet" href="./files/main.css">
+
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+<style>
+body {
+  font-family: "Times New Roman", serif;
+  font-size: 13pt;
+}
+
+
+* {padding:0;margin:0;box-sizing:border-box;}
+#video {
+  position: relative;
+  padding-bottom: 45%; /* 16:9 */
+  height: 0;
+}
+#video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  transform: translateX(12.5%);
+}
+
+</style>
+
+  <style type="text/css">/**
+ * Style sheet used by new LibX tooltip code
+ */
+
+/* We insert a <div> with libx-tooltip style under the body.
+ * This will inherit body's style - we can't afford to inherit undesirable 
+ * styles and we must redefine what we need.  OTOH, some things, e.g.
+ * font-size, might be ok to be inherited to stay within the page's tone.
+ */
+.libx-tooltip {
+    display: none;
+    overflow: visible;
+    padding: 5px;
+    z-index: 100;
+    background-color: #eee;
+    color: #000;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+    border: 2px solid #666;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.libx-tooltip p {
+    /* override default 1em margin to keep paragraphs inside a tooltip closer together. */
+    margin: .2em;
+}
+</style><style type="text/css">/**
+ * Style sheet used by LibX autolinking code
+ */
+.libx-autolink {
+}
+
+</style>
+
+</head>
+
+  <body>
+
+    <div class="outercontainer">
+      <div class="container">
+
+        <div class="content project_title">
+          <br>
+	  <h2>Waypoint Transformer: Reinforcement Learning via Supervised Learning with Intermediate Targets</h2>
+          <div>
+            <span class="venue"><a href="https://neurips.cc/">NeurIPS 2023</a></span>
+            <span class="tag">
+              <a href="https://arxiv.org/abs/2306.14069">Pre-print</a>&nbsp;
+              <a href="https://github.com/StanfordAI4HI/waypoint-transformer">Code</a>&nbsp;
+            </span>
+          </div>
+        </div>
+
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Summary</b></div>
+<!--               <b>
+                <font size="5">Summary</font>
+              </b> -->
+              <!-- &nbsp; -->
+          </p>
+	   <ul>
+		  <li>We propose a novel RvS method, Waypoint Transformer, using waypoint generation networks and establish new state-of-the-art performance, surpassing all existing methods, in challenging tasks such as AntMaze Large and Kitchen Partial/Mixed (Fu et al., 2020). On tasks from Gym-MuJoCo, our method rivals the performance of TD learning-based methods such as Implicit Q-Learning and Conservative Q-Learning (Kostrikov et al., 2021; Kumar et al., 2020), with significant improvements over existing RvS methods.</li>
+		  <li>We motivate the benefit of conditioning RvS on intermediate targets using a chain-MDP example and an empirical analysis of maze navigation tasks. By providing such additional guidance on suboptimal datasets, we show that a policy optimized with a behavioral cloning objective chooses more optimal actions compared to conditioning on fixed targets (as in Chen et al., 2021; Emmons et al., 2021), facilitating improved stitching capability.</li>
+		  <li>Our work also provides practical insights for improving RvS, such as significantly reducing training time, solving the hyperparameter tuning challenge in RvS posed by Emmons et al., 2021, and notably improved stability in performance across runs. </li>
+	</ul>
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <center>
+          <img width=35% src="array.gif">
+          <br>
+          <br>
+          &nbsp;
+        </center>
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Waypoint Generation</b></div>
+	      We can construct waypoints for goal-conditioned and reward-conditioned tasks using simple behavioural cloning objectives. Using these waypoints, we demonstrate significant improvement in goal-reaching and reward-achieving capabilities through the addition of only intermediate targets.
+	<br>
+	<ul>
+		<li> For goal-conditioned tasks, Kumar et al. (2022) demonstrated that RvS methods tend to be unable to stitch as effectively as value-based methods. We demonstrate that through generation of intermediate targets and conditioning the policy on these targets, we are able to stitch together appropriate subsequences and acheive state-of-the-art performance.
+			 <img src="goal.png" alt="F" width="900" 
+     height="350">
+			 <center><i>Figure 1: Shows the ant's location across 100 rollouts of (a) a WT policy and (b) a global goal-conditioned transformer policy.</center></i>
+		<br>
+
+		<li> For reward-conditioned tasks, existing return conditioning variables either have large bias or variance (Emmons et al., 2021; Chen et al., 2021). We adapt the baseline network, often used for reducing variance in policy gradient methods, for offline RL by conditioning it on the desired return.
+			<center><img src="score.png" alt="F" width="400"
+     height="350"><img src="var.png" alt="F" width="400"
+					       height="350"></center>
+			<br>
+			<center><i>Figure 2: Comparison of different reward-conditioning methods on hopper-medium-replay-v2. 
+				
+					<p>	<b>Left</b>: Performance profiles for transformers using average reward-to-go (ARTG), cumulative reward-to-go (CRTG), and WT across 5 random seeds. <b>Right</b>: Standard deviation in CRTG inputted to the model when updated with attained rewards and using predictions from the reward waypoint network when average return is approximately held constant.</center></i>
+		<br>
+	</ul>
+          </p>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="text">
+            <p>
+              <div class="title"><b>Waypoint Transformer</b></div>
+	      Incorporating intermediate targets and leveraging the representational power of the transformer architecture, we introduce the waypoint transformer (WT). Based on the decision transformer, we make several architectural simplifications that allow for vastly improved training time (6x speedup) and allow for conditioning on the generated reward/goal waypoints, leading to significantly improved performance (WT: 74.1 <span>&#177;</span>  2.8; DT: 43.8 <span>&#177;</span>  7.3).
+	      <br><br>
+
+			 <center><img src="arch.png" alt="F">
+				 <br>
+				 <i>Figure 3: Waypoint Transformer architecture, where W(s, <span>&omega;</span>) represents the output of the goal or reward waypoint network.</center></i>
+	<br>
+          </p>
+          </div>
+        </div>
+
+
+<div class="panel-footer">Designed by Anirudhan Badrinath, with style from trajectory-transformer.github.io</div>
+
+</div></body></html>
